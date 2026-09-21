@@ -1,0 +1,103 @@
+/* ============================================================
+   EL JARDÍN — página del túnel infinito de tulipanes
+   ============================================================ */
+
+.garden-body {
+  height: 100vh;
+  overflow: hidden;
+  /* Esta página no se desplaza como documento normal: el scroll
+     (o el pellizco/zoom en táctiles) se captura como "entrada" para
+     el efecto de viaje, en vez de mover la página. */
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+#warpCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.garden-back-btn {
+  position: fixed;
+  top: clamp(1rem, 3vh, 1.5rem);
+  left: clamp(1rem, 3vw, 1.5rem);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55em 1.2em;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 213, 88, 0.4);
+  background: rgba(10, 8, 20, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--gold-soft);
+  font-family: var(--font-romantic);
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 18px rgba(255, 213, 88, 0.1);
+}
+
+.garden-back-btn:hover,
+.garden-back-btn:focus-visible {
+  background: rgba(255, 213, 88, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(255, 213, 88, 0.3);
+  outline: none;
+}
+
+.garden-header {
+  position: fixed;
+  top: clamp(4.5rem, 12vh, 6rem);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  text-align: center;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.garden-header__eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.garden-header__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  background: linear-gradient(180deg, var(--cream) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 40px rgba(255, 213, 88, 0.35);
+}
+
+.garden-header__hint {
+  margin: 0.7rem 0 0;
+  font-family: var(--font-romantic);
+  font-style: italic;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  color: var(--text-muted);
+  opacity: 0.75;
+  transition: opacity 1s ease;
+}
+
+.garden-header__hint.is-hidden {
+  opacity: 0;
+}
+
+@media (max-width: 480px) {
+  .garden-header {
+    top: clamp(4rem, 10vh, 5rem);
+  }
+}

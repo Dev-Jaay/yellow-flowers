@@ -1,0 +1,816 @@
+/* ============================================================
+   NUESTRA GALAXIA — hoja de estilos principal
+   ============================================================ */
+
+:root {
+  --bg-deep: #05040d;
+  --bg-void: #0a0818;
+  --nebula-purple: #3a1a5c;
+  --nebula-blue: #14235c;
+  --nebula-rose: #4a1730;
+  --gold: #ffd558;
+  --gold-soft: #ffe9a8;
+  --gold-deep: #f2a93b;
+  --cream: #fff6df;
+  --text-soft: #f4ecff;
+  --text-muted: #c9c0e6;
+
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-romantic: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body: 'Quicksand', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-deep);
+  color: var(--text-soft);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================
+   FONDO: canvas de estrellas + nebulosa + viñeta
+   ============================================================ */
+
+#starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: radial-gradient(ellipse at 50% 20%, #140f2b 0%, var(--bg-void) 45%, var(--bg-deep) 100%);
+}
+
+.nebula-glow {
+  position: fixed;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.nebula-glow--1 {
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  top: -10%;
+  left: -15%;
+  background: radial-gradient(circle, var(--nebula-purple), transparent 70%);
+  animation: drift1 26s ease-in-out infinite alternate;
+}
+
+.nebula-glow--2 {
+  width: 55vw;
+  height: 55vw;
+  max-width: 700px;
+  max-height: 700px;
+  bottom: -15%;
+  right: -10%;
+  background: radial-gradient(circle, var(--nebula-blue), transparent 70%);
+  animation: drift2 32s ease-in-out infinite alternate;
+}
+
+.nebula-glow--3 {
+  width: 45vw;
+  height: 45vw;
+  max-width: 600px;
+  max-height: 600px;
+  top: 30%;
+  right: 20%;
+  background: radial-gradient(circle, var(--nebula-rose), transparent 72%);
+  opacity: 0.35;
+  animation: drift3 22s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(4%, 6%) scale(1.08); }
+}
+@keyframes drift2 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-5%, -4%) scale(1.1); }
+}
+@keyframes drift3 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-6%, 5%) scale(0.95); }
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(3, 2, 10, 0.75) 100%);
+}
+
+/* Polvo de estrellas / partículas flotantes doradas */
+.stardust {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stardust-particle {
+  position: absolute;
+  bottom: -5%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-soft), rgba(255, 213, 88, 0));
+  opacity: 0;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(var(--drift, 40px), -110vh) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Palabras flotantes ambientales */
+.floating-words {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-word {
+  position: absolute;
+  font-family: var(--font-romantic);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gold-soft);
+  opacity: 0;
+  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(255, 213, 88, 0.5);
+  animation: wordFade linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes wordFade {
+  0%   { opacity: 0; transform: translateY(20px) scale(0.9); }
+  12%  { opacity: 0.55; transform: translateY(0) scale(1); }
+  85%  { opacity: 0.45; }
+  100% { opacity: 0; transform: translateY(-30px) scale(0.95); }
+}
+
+/* Estrella que sigue al cursor */
+.cursor-star {
+  position: fixed;
+  z-index: 40;
+  pointer-events: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  box-shadow: 0 0 8px 2px rgba(255, 224, 140, 0.9), 0 0 18px 6px rgba(255, 197, 92, 0.4);
+  animation: cursorStarFade 900ms ease-out forwards;
+}
+
+@keyframes cursorStarFade {
+  0%   { opacity: 1; transform: scale(1) translate(0, 0); }
+  100% { opacity: 0; transform: scale(0.2) translate(0, 12px); }
+}
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
+
+.hero {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: clamp(2.5rem, 8vh, 5rem) 1.25rem clamp(1rem, 3vh, 2rem);
+}
+
+.hero__eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: clamp(0.7rem, 1.6vw, 0.85rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 7vw, 4.2rem);
+  background: linear-gradient(180deg, var(--cream) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 40px rgba(255, 213, 88, 0.35);
+  letter-spacing: 0.02em;
+}
+
+.hero__subtitle {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-romantic);
+  font-size: clamp(1rem, 2.4vw, 1.4rem);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.garden-nav-btn {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.4em;
+  margin: 1.2rem auto 0;
+  padding: 0.55em 1.4em;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 213, 88, 0.4);
+  background: rgba(255, 213, 88, 0.08);
+  color: var(--gold-soft);
+  font-family: var(--font-romantic);
+  font-style: italic;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 18px rgba(255, 213, 88, 0.12);
+}
+
+.garden-nav-btn:hover,
+.garden-nav-btn:focus-visible {
+  background: rgba(255, 213, 88, 0.2);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 26px rgba(255, 213, 88, 0.35);
+  outline: none;
+}
+
+.hero__hint {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--gold-soft);
+  opacity: 0.6;
+  animation: bob 2.4s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 0.9; }
+}
+
+/* ============================================================
+   ESCENARIO DE LA GALAXIA
+   ============================================================ */
+
+.galaxy-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: clamp(1rem, 4vw, 3rem) 0.5rem clamp(4rem, 12vh, 8rem);
+}
+
+.galaxy {
+  position: relative;
+  width: min(94vw, 900px);
+  height: min(94vw, 900px);
+  max-width: 900px;
+  max-height: 900px;
+  /* IMPORTANTE: no usar transform-style:preserve-3d ni aplicar
+     transform (rotateX/rotateY, etc.) sobre este contenedor. Con
+     hijos posicionados y con z-index (las flores, el núcleo, los
+     anillos), un contexto 3D hace que el navegador ignore el
+     z-index normal para decidir qué elemento recibe el clic, y los
+     clics empiezan a fallar de forma intermitente. */
+}
+
+/* Anillos decorativos (solo trazan la ruta orbital) */
+.orbit-path {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 224, 150, 0.16);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 0 0 30px rgba(255, 213, 88, 0.03) inset;
+}
+
+.orbit-path--1 { width: 40%; height: 40%; }
+.orbit-path--2 { width: 68%; height: 68%; }
+.orbit-path--3 { width: 96%; height: 96%; }
+
+/* Núcleo de la galaxia: gran flor central */
+.galaxy-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  /* Área clicable/táctil real: bastante más grande que la flor que
+     se ve (invisible, no afecta el diseño). */
+  width: calc(clamp(110px, 20vw, 230px) * 1.6);
+  height: calc(clamp(110px, 20vw, 230px) * 1.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%;
+}
+
+.core-visual {
+  position: relative;
+  /* Tamaño visual real de la flor central (igual que antes). */
+  width: clamp(110px, 20vw, 230px);
+  height: clamp(110px, 20vw, 230px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.core-halo {
+  position: absolute;
+  inset: -35%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 213, 88, 0.55) 0%, rgba(255, 213, 88, 0.18) 35%, transparent 70%);
+  filter: blur(6px);
+  animation: corePulse 4.5s ease-in-out infinite;
+}
+
+.core-halo--2 {
+  inset: -60%;
+  opacity: 0.5;
+  animation: corePulse 6s ease-in-out infinite reverse;
+  background: radial-gradient(circle, rgba(255, 233, 168, 0.4) 0%, transparent 65%);
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(0.92); opacity: 0.75; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.core-flower {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 25px rgba(255, 213, 88, 0.75)) drop-shadow(0 0 55px rgba(255, 170, 60, 0.4));
+  animation: coreSpin 90s linear infinite, coreBreathe 5s ease-in-out infinite;
+  transition: filter 0.4s ease, transform 0.4s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.galaxy-core:hover .core-flower,
+.galaxy-core:focus-visible .core-flower {
+  filter: drop-shadow(0 0 35px rgba(255, 224, 140, 0.95)) drop-shadow(0 0 75px rgba(255, 170, 60, 0.55));
+  transform: scale(1.06);
+}
+
+@keyframes coreSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes coreBreathe {
+  0%, 100% { filter: drop-shadow(0 0 25px rgba(255, 213, 88, 0.7)); }
+  50% { filter: drop-shadow(0 0 38px rgba(255, 213, 88, 0.95)); }
+}
+
+.core-sparkles {
+  position: absolute;
+  inset: -20%;
+  z-index: 3;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 15% 25%, var(--gold-soft), transparent),
+    radial-gradient(2px 2px at 80% 20%, var(--gold-soft), transparent),
+    radial-gradient(2px 2px at 70% 80%, var(--gold-soft), transparent),
+    radial-gradient(1.5px 1.5px at 25% 75%, var(--gold-soft), transparent);
+  animation: sparkleTwinkle 3s ease-in-out infinite;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ============================================================
+   ANILLOS ORBITALES DE FLORES (generados por JS)
+   ============================================================ */
+
+.orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  will-change: transform;
+  /* Los anillos son contenedores invisibles y cada uno crea su
+     propio contexto de apilamiento (por tener "transform" animado).
+     El anillo externo (96% del ancho) se dibuja por encima de los
+     anillos internos y, sin esto, su área transparente "robaba" los
+     clics destinados a las flores de los anillos de adentro. Al
+     desactivar aquí los eventos de puntero y reactivarlos solo en
+     .flower-btn, el clic atraviesa el anillo y llega directo al
+     botón real, sin importar qué anillo esté "encima". */
+  pointer-events: none;
+}
+
+.orbit-ring--1 { width: 40%; height: 40%; animation: spin linear infinite; }
+.orbit-ring--2 { width: 68%; height: 68%; animation: spin linear infinite reverse; }
+.orbit-ring--3 { width: 96%; height: 96%; animation: spin linear infinite; }
+
+/* Al pasar el cursor sobre una flor, se congela SU anillo completo
+   (incluida la contra-rotación que la mantiene "de pie") para que
+   sea fácil apuntar y hacer clic sobre un objeto en movimiento. */
+.orbit-ring.is-paused,
+.orbit-ring.is-paused .flower-upright,
+.orbit-ring.is-paused .flower-btn {
+  animation-play-state: paused;
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateX(var(--radius, 100px));
+}
+
+.flower-upright {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(calc(var(--angle, 0deg) * -1));
+  animation: counterSpin var(--dur, 40s) linear infinite;
+  animation-direction: var(--dir, normal);
+}
+
+@keyframes counterSpin {
+  from { transform: translate(-50%, -50%) rotate(calc(var(--angle, 0deg) * -1)); }
+  to   { transform: translate(-50%, -50%) rotate(calc(var(--angle, 0deg) * -1 - 360deg)); }
+}
+
+.flower-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* El botón (área clicable/táctil real) es MUCHO más grande que la
+     flor que se ve —el área extra es invisible, así que no afecta el
+     diseño— con un mínimo cómodo para dedos en móvil. */
+  width: max(calc(var(--size, 60px) * 2.2), 64px);
+  height: max(calc(var(--size, 60px) * 2.2), 64px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: flowerSway var(--sway-dur, 6s) ease-in-out infinite;
+  animation-delay: var(--sway-delay, 0s);
+  /* Reactiva los clics: el anillo que lo contiene los desactivó
+     (ver .orbit-ring) para no taparle el paso a otras flores. */
+  pointer-events: auto;
+}
+
+.flower-btn__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--size, 60px) * 1.5);
+  height: calc(var(--size, 60px) * 1.5);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 213, 88, 0.4), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.flower-btn img {
+  position: relative;
+  width: var(--size, 60px);
+  height: var(--size, 60px);
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 213, 88, 0.55)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  transition: filter 0.35s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.flower-btn:hover,
+.flower-btn:focus-visible {
+  transform: scale(1.25);
+  outline: none;
+}
+
+.flower-btn:hover .flower-btn__glow,
+.flower-btn:focus-visible .flower-btn__glow {
+  opacity: 1;
+}
+
+.flower-btn:hover img,
+.flower-btn:focus-visible img {
+  filter: drop-shadow(0 0 16px rgba(255, 224, 140, 0.95)) drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
+}
+
+.flower-btn:active {
+  transform: scale(1.05);
+}
+
+@keyframes flowerSway {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+
+/* Emojis decorativos (corazones, estrellas, destellos): puramente
+   visuales, no interactivos, para dar sensación de plenitud. */
+.decor-item {
+  position: relative;
+  display: block;
+  width: var(--size, 20px);
+  height: var(--size, 20px);
+  font-size: var(--size, 20px);
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 0 6px rgba(255, 213, 88, 0.75));
+  animation:
+    flowerSway var(--sway-dur, 5s) ease-in-out infinite var(--sway-delay, 0s),
+    decorTwinkle 3.2s ease-in-out infinite var(--twinkle-delay, 0s);
+}
+
+@keyframes decorTwinkle {
+  0%, 100% { opacity: 0.45; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* ============================================================
+   PIE DE PÁGINA
+   ============================================================ */
+
+.site-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1.5rem 1rem 2.5rem;
+  font-family: var(--font-romantic);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* ============================================================
+   MODAL ROMÁNTICO
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(5, 3, 12, 0.7);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0.45s;
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(94vw, 460px);
+  /* El modal en sí ya NO hace scroll: su altura máxima queda fija y
+     solo .modal__scroll (el texto) se desplaza por dentro, así la
+     flor, el título y el botón de cerrar quedan siempre visibles. */
+  max-height: 88vh;
+  overflow: hidden;
+  padding: clamp(2.2rem, 6vw, 3rem) clamp(1.5rem, 6vw, 2.6rem) clamp(1.6rem, 4vw, 2rem);
+  text-align: center;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(38, 22, 58, 0.92), rgba(18, 12, 32, 0.96));
+  border: 1px solid rgba(255, 213, 88, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(255, 213, 88, 0.08) inset,
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 90px rgba(255, 180, 70, 0.15);
+  transform: scale(0.82) translateY(30px);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.25), opacity 0.4s ease;
+}
+
+.modal-overlay.is-open .modal {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal__glow {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(255, 213, 88, 0.35), transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.modal__stardust {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.5px 1.5px at 85% 15%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 30% 85%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 75% 90%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,0.5), transparent);
+}
+
+.modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 213, 88, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--gold-soft);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.modal__close:hover {
+  background: rgba(255, 213, 88, 0.2);
+  transform: rotate(90deg);
+}
+
+.modal__flower-frame {
+  position: relative;
+  z-index: 1;
+  width: clamp(90px, 24vw, 130px);
+  height: clamp(90px, 24vw, 130px);
+  margin: 0 auto 0.75rem;
+}
+
+.modal__flower-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(255, 213, 88, 0.7));
+  animation: modalFlowerSpin 16s linear infinite, corePulse 4s ease-in-out infinite;
+}
+
+@keyframes modalFlowerSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.modal__kicker {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  opacity: 0.75;
+}
+
+.modal__title {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 0.9rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  color: var(--cream);
+  text-shadow: 0 0 20px rgba(255, 213, 88, 0.3);
+}
+
+.modal__scroll {
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Deja un huequito para que el texto no quede pegado al borde
+     cuando aparece la barra de scroll. */
+  padding-right: 0.4rem;
+  margin-right: -0.4rem;
+}
+
+/* Difumina el borde inferior del texto, pero solo cuando de verdad
+   hay más contenido para leer (la clase la agrega js/main.js). */
+.modal__scroll.is-scrollable {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 18px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 18px), transparent 100%);
+}
+
+.modal__scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modal__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal__scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 213, 88, 0.35);
+  border-radius: 999px;
+}
+
+.modal__message {
+  margin: 0 0 0.4rem;
+  padding-bottom: 0.6rem;
+  font-family: var(--font-romantic);
+  font-size: clamp(1.02rem, 3.2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--text-soft);
+  white-space: pre-line;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 720px) {
+  .orbit-path--1 { width: 34%; height: 34%; }
+  .orbit-path--2 { width: 64%; height: 64%; }
+  .orbit-path--3 { width: 98%; height: 98%; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding-top: 2rem; }
+  .galaxy-stage { padding-bottom: 4.5rem; }
+  .galaxy { width: 98vw; height: 98vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

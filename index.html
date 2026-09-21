@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Nuestra Galaxia — Una Constelación de Girasoles</title>
+<meta name="description" content="Una galaxia romántica de girasoles hecha para ti.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌻%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Fondo profundo: nebulosa + estrellas en canvas -->
+<canvas id="starfield"></canvas>
+<div class="nebula-glow nebula-glow--1"></div>
+<div class="nebula-glow nebula-glow--2"></div>
+<div class="nebula-glow nebula-glow--3"></div>
+<div class="vignette"></div>
+
+<!-- Polvo de estrellas / partículas flotantes -->
+<div class="stardust" id="stardust" aria-hidden="true"></div>
+
+<!-- Texto ambiental flotante -->
+<div class="floating-words" id="floatingWords" aria-hidden="true"></div>
+
+<!-- Encabezado -->
+<header class="hero">
+  <p class="hero__eyebrow">Una galaxia hecha de pequeños detalles</p>
+  <h1 class="hero__title">Nuestra Galaxia</h1>
+  <p class="hero__subtitle">Toca cada girasol y descubre una estrella distinta</p>
+  <a href="jardin.html" class="garden-nav-btn">🌷 Jardín</a>
+  <span class="hero__hint">↓ desplázate por el universo ↓</span>
+</header>
+
+<!-- Galaxia principal -->
+<main class="galaxy-stage" id="galaxyStage">
+  <div class="galaxy" id="galaxy">
+
+    <!-- Anillos orbitales (decorativos, trazan la ruta) -->
+    <div class="orbit-path orbit-path--1"></div>
+    <div class="orbit-path orbit-path--2"></div>
+    <div class="orbit-path orbit-path--3"></div>
+
+    <!-- Núcleo: la gran flor central. El botón (área clicable) es
+         más grande e invisible; el tamaño visual real vive en
+         .core-visual, sin cambiar cómo se ve. -->
+    <div class="galaxy-core" id="galaxyCore" tabindex="0" role="button" aria-label="Corazón de la galaxia: toca para leer un mensaje">
+      <div class="core-visual">
+        <div class="core-halo"></div>
+        <div class="core-halo core-halo--2"></div>
+        <img src="assets/flores/centro.png" alt="Girasol central, el corazón de la galaxia" class="core-flower" draggable="false">
+        <div class="core-sparkles" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Los anillos de flores se generan por JavaScript en js/galaxy.js -->
+    <div class="orbit-ring orbit-ring--1" id="ring1"></div>
+    <div class="orbit-ring orbit-ring--2" id="ring2"></div>
+    <div class="orbit-ring orbit-ring--3" id="ring3"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>hecho con 🌻 y mucho cuidado, para alguien especial</p>
+</footer>
+
+<!-- Modal romántico -->
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal__close" id="modalClose" aria-label="Cerrar mensaje">✕</button>
+    <div class="modal__glow"></div>
+    <div class="modal__stardust" aria-hidden="true"></div>
+    <div class="modal__flower-frame">
+      <img id="modalFlowerImg" src="assets/flores/flor-1.png" alt="" class="modal__flower-img" draggable="false">
+    </div>
+    <p class="modal__kicker">🌻 un mensaje entre las estrellas 🌻</p>
+    <h2 class="modal__title" id="modalTitle">Título de ejemplo</h2>
+    <!-- El texto puede ser largo: este bloque tiene su propio scroll
+         interno para que el modal no se estire de más. -->
+    <div class="modal__scroll">
+      <p class="modal__message" id="modalMessage">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="js/messages.js"></script>
+<script src="js/starfield.js"></script>
+<script src="js/stardust.js"></script>
+<script src="js/cursor-trail.js"></script>
+<script src="js/galaxy.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

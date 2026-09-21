@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>El Jardín — Nuestra Galaxia</title>
+<meta name="description" content="Un viaje infinito a través de un jardín de tulipanes.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌷%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/garden.css">
+</head>
+<body class="garden-body">
+
+<!-- Mismo fondo cósmico que la galaxia, para que se sienta como
+     parte del mismo universo. -->
+<canvas id="starfield"></canvas>
+<div class="nebula-glow nebula-glow--1"></div>
+<div class="nebula-glow nebula-glow--2"></div>
+<div class="nebula-glow nebula-glow--3"></div>
+<div class="vignette"></div>
+<div class="stardust" id="stardust" aria-hidden="true"></div>
+
+<!-- Túnel infinito de tulipanes: se dibuja aquí y reacciona al
+     scroll (o al pellizco/zoom en pantallas táctiles). -->
+<canvas id="warpCanvas" aria-hidden="true"></canvas>
+
+<a href="index.html" class="garden-back-btn">← Nuestra Galaxia</a>
+
+<header class="garden-header">
+  <p class="garden-header__eyebrow">un viaje sin final</p>
+  <h1 class="garden-header__title">El Jardín</h1>
+  <p class="garden-header__hint" id="gardenHint">
+    Desliza el scroll (o pellizca la pantalla) para atravesarlo
+  </p>
+</header>
+
+<script src="js/starfield.js"></script>
+<script src="js/stardust.js"></script>
+<script src="js/cursor-trail.js"></script>
+<script src="js/garden-warp.js"></script>
+</body>
+</html>
