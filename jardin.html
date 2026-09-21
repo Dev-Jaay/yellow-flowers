@@ -39,9 +39,17 @@
   </p>
 </header>
 
+<!-- Música de fondo (compartida con la página principal): se intenta
+     reproducir automáticamente (ver js/music.js). -->
+<audio id="bgMusic" src="assets/audio/meditation-thais.mp3" loop preload="auto"></audio>
+<button id="musicToggle" class="music-toggle" type="button" aria-pressed="false" aria-label="Reproducir música de fondo">
+  <span class="music-toggle__icon">🎵</span>
+</button>
+
 <script src="js/starfield.js"></script>
 <script src="js/stardust.js"></script>
 <script src="js/cursor-trail.js"></script>
+<script src="js/music.js"></script>
 <script src="js/garden-warp.js"></script>
 </body>
 </html>

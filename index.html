@@ -91,11 +91,20 @@
   </div>
 </div>
 
+<!-- Música de fondo: se intenta reproducir automáticamente (ver
+     js/music.js). Si el navegador bloquea el autoplay, arranca sola
+     en cuanto la persona interactúa por primera vez con la página. -->
+<audio id="bgMusic" src="assets/audio/meditation-thais.mp3" loop preload="auto"></audio>
+<button id="musicToggle" class="music-toggle" type="button" aria-pressed="false" aria-label="Reproducir música de fondo">
+  <span class="music-toggle__icon">🎵</span>
+</button>
+
 <script src="js/messages.js"></script>
 <script src="js/starfield.js"></script>
 <script src="js/stardust.js"></script>
 <script src="js/cursor-trail.js"></script>
 <script src="js/galaxy.js"></script>
+<script src="js/music.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
